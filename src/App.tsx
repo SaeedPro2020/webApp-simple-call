@@ -1,34 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { userDetails } from "./api/UserRepo";
 import "./App.css";
 import UserProfile from "./components/UserProfile";
-import {userType} from './components/UserProfile'
+import { userType } from "./model/Models";
 
 function App() {
   const userData: userType[] = []
   const [listOfUsers, setListOfUsers] = useState(userData)
+  const [error, setError] = useState(false)
 
   const getListOfUsers = async () => {
-    try{
       const ourData = await userDetails()
       setListOfUsers(ourData.data)
-    } catch (error){
-      console.log(error)
-    }
+      console.log(ourData)
   }
 
-  useEffect(() => {
-    getListOfUsers()
-  },[!listOfUsers])
-
   return (
-    <div className="App">
-      {listOfUsers.map((cardData, i) =>(
-        <UserProfile key={i} id={cardData.id} name={cardData.name}
+    <div data-testid="AppCompo" className="App">
+
+      <button onClick={() => getListOfUsers()}>Get users</button>
+
+      {listOfUsers.map((cardData, i) =>{
+        return (<UserProfile data-testid="listUserComp" key={i} id={cardData.id} name={cardData.name}
         email={cardData.email} gender ={cardData.gender}
-        status={cardData.status}/>
-      ))}
-    </div>
+        status={cardData.status}/>)}
+      )}
+      </div>
   );
 }
 
