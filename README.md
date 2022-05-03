@@ -40,3 +40,4 @@ Application:
 - Create unit tests (100% coverage)
 - For each component created, create also a storybook story
 - Integrate this graphql api: https://studio.apollographql.com/public/SpaceX-pxxbxen/home?variant=current
+- Update missions with graphQl api

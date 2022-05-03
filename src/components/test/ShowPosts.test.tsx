@@ -1,5 +1,6 @@
 import { act, fireEvent, render, waitFor } from "@testing-library/react"
 import axios from "axios";
+import ShowComments from "../ShowComments";
 import ShowPosts from "../ShowPosts";
 import UserProfile from "../UserProfile";
 
@@ -9,9 +10,11 @@ const mockedCommentAxios = axios as jest.Mocked<typeof axios>;
 
 describe('ShowPosts component', () =>{
 
-  const setBtnComment: VoidFunction = jest.fn();
+  const setBtnPosts: VoidFunction = jest.fn();
+  const setBtnComments: VoidFunction = jest.fn();
+  
     const renderComponent  = () => (render(
-        <ShowPosts onClose={setBtnComment} onData={{
+        <ShowPosts onClose={setBtnPosts} onData={{
             id: 0,
             user_id: 0,
             title: "title",
@@ -22,6 +25,16 @@ describe('ShowPosts component', () =>{
     const renderParentComponent  = () => (render(
       <UserProfile id={0} name={"Saeed"} email={"email@gmail.com"} gender={"male"} status={"active"} />
   ));
+
+  const renderChildomponent  = () => (render(
+    <ShowComments onClose={setBtnComments} onData={{
+      id: 0,
+      post_id: 12,
+      name: "Jon",
+      email: "Jon@gmail.com",
+      body: "one body"
+    }} />
+));
 
     it('render h3', () => {
 
@@ -41,7 +54,7 @@ describe('ShowPosts component', () =>{
                     expect(textBtn).toBeTruthy();
                   });
     });
-
+// 
     it('IF btn close click', async () =>{
       const { getByTestId } = renderComponent();
 
@@ -52,10 +65,9 @@ describe('ShowPosts component', () =>{
                 await waitFor(() => {
                   const rootElement = queryByTestId('listPostsComp');
                   expect(rootElement).toBeFalsy();
-                  expect(setBtnComment).toBeCalled()
+                  expect(setBtnPosts).toBeCalled()
                 });
   });
-
 
     it('IF btn Comments clicked and have data', async () =>{
         const { getByText, queryByTestId } = renderComponent();
@@ -76,11 +88,16 @@ describe('ShowPosts component', () =>{
 
                   fireEvent.click(getByText('Comments'));
 
-                  await waitFor(() => {
-                    const textBtn = queryByTestId('listCommentsComp');
-                    expect(textBtn).toBeTruthy();
+                  waitFor(() => {
+                    const listOfComments = queryByTestId('listCommentsComp');
+                    const divContainer = queryByTestId("detailsContainer")
+                    expect(listOfComments).toBeTruthy();
+                    expect(divContainer).toBeTruthy();
+                    expect(listOfComments).toBeCalledTimes(1);
                   });
+
                 })
+                
     });
 
 });
