@@ -2,15 +2,23 @@ import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import App from './App';
 import axios from 'axios';
+import { ApolloProvider } from '@apollo/client';
+import { client, EXCHANGE_MISSIONS } from './api/Apolorepo';
+import { MockedProvider } from '@apollo/client/testing';
+import { GraphQLError } from 'graphql/error/GraphQLError';
 
 // Mock jest and set the type
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('App', () =>{
-  const renderComponent  = () => (render(<App />));
+  const renderComponent  = () => (render(
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  ));
 
-  it('should render some componets', async () =>{
+  it('should render list of users', async () =>{
 
     const { getByText, queryByTestId } = renderComponent();
 
@@ -34,4 +42,75 @@ describe('App', () =>{
       expect(userList).toBeTruthy();
     });
   });
+
+  it('should render missions part', async () =>{
+
+    const { getByText, queryByTestId } = renderComponent();
+
+    fireEvent.click(getByText('Get Missions'));
+
+    await waitFor(() => {
+      const userList = queryByTestId('missionsRoot');
+      expect(userList).toBeTruthy();
+    });
+  });
+
+  // it('should render missionComponents', async () => {
+  //   const missionMock = {
+  //     request: {
+  //       query: EXCHANGE_MISSIONS,
+  //       variables: { nationality: 'missions' },
+  //     },
+  //     result: {
+  //       data: { missions: [{ 
+  //         name: 'Thaicom', 
+  //         website: 'http://www.thaicom.net/en/satellites/overview',
+  //         __typename:'Mission',
+  //         manufacturers:['Orbital ATK', 'something'],
+  //         payloads: [{manufacturer: 'Orbital ATK', nationality: 'Thailand', orbit: 'GTO', __typename:'Payload'}] 
+  //     }] },
+  //     },
+  //   };
+  
+  //   const component = () => (render(
+  //     <MockedProvider mocks={[missionMock]} addTypename={false}>
+  //       <App />
+  //     </MockedProvider>,
+  //   ));
+
+  //   const { getByText, queryByTestId } = component();
+
+  //   fireEvent.click(getByText('Get Missions'))
+  //   await new Promise(resolve => setTimeout(resolve, 0)); // highlight-line
+  
+  //   const missionList = queryByTestId('missionComponents');
+  //   expect(missionList).toBeTruthy();
+    
+  // });
+
+  // it('should render missionComponents', async () => {
+  //   const missionMock = {
+  //     request: {
+  //       query: EXCHANGE_MISSIONS
+  //     },
+  //     result: {
+  //       errors: [new GraphQLError('Error!')],
+  //     },
+  //   }
+  
+  //   const component = () => (render(
+  //     <MockedProvider mocks={[missionMock]} addTypename={false}>
+  //       <App />
+  //     </MockedProvider>,
+  //   ));
+
+  //   const { getByText, queryByTestId } = component();
+
+  //   fireEvent.click(getByText('Get Missions'))
+  //   await new Promise(resolve => setTimeout(resolve, 0)); // highlight-line
+  
+  //   const error = queryByTestId('error');
+  //   expect(error).toBeTruthy();
+    
+  // });
 })

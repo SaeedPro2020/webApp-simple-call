@@ -10,23 +10,12 @@ const mockedPostAxios = axios as jest.Mocked<typeof axios>;
 describe('UserProfile', () =>{
 
     const renderComponent  = () => (render(
-        <UserProfile id={0} name={"Saeed"} email={"email@gmail.com"} gender={"male"} status={"active"} />
+        <UserProfile id={12} name={"Saeed"} email={"email@gmail.com"} gender={"male"} status={"active"} />
     ));
 
-    it('render h3', () => {
-
-        const { queryByTestId } = renderComponent();
-
-        const h3 = queryByTestId("headlineName");
-        expect(h3).toBeTruthy();
-    });
-
-    it('render status Icon', () => {
-
-        const { queryByTestId } = renderComponent();
-        const imgIconActive = queryByTestId("imageActive");
-        expect(imgIconActive).toBeTruthy();
-    });
+    const render2Component  = () => (render(
+        <UserProfile id={12} name={"Francesca"} email={"Francesca@gmail.com"} gender={"female"} status={"inactive"} />
+    ));
 
     it('IF btn post click', async () =>{
         const { getByText, queryByTestId } = renderComponent();
@@ -39,29 +28,58 @@ describe('UserProfile', () =>{
                   });
     });
 
-    it('btn clicked and have data', async () =>{
+    it('should render list of posts', async () =>{
+
         const { getByText, queryByTestId } = renderComponent();
+    
+            // Provide the data object to be returned
+            mockedPostAxios.get.mockResolvedValue({
+              data: [
+                {    
+                    id: 0,
+                    user_id: 12,
+                    title: "title",
+                    body: "a body",
+                }
+              ],
+            });
+    
+        fireEvent.click(getByText('Posts'));
+    
+        await waitFor(() => {
+          const PostList = queryByTestId('detailsPostContainer');
+          expect(PostList).toBeTruthy();
+        });
+      });
 
-        act(async () => {
-                // Provide the data object to be returned
-                mockedPostAxios.get.mockResolvedValue({
-                    data: [
-                      {    
-                        id: 0,
-                        user_id: 54,
-                        title: 'title',
-                        body: 'body',
-                      }
-                    ],
-                  });
+      it('test icons for coditional rendering', () => {
+        const { queryByTestId } = renderComponent();
 
-                  fireEvent.click(getByText('Posts'));
+        const imageIcon1 = queryByTestId('maleIcon');
+        const imageIcon2 = queryByTestId('femaleIcon');
+        const imageIcon3 = queryByTestId('activeIcon');
+        const imageIcon4 = queryByTestId('inActiveIcon');
 
-                  await waitFor(() => {
-                    const textBtn = queryByTestId('listPostsComp');
-                    expect(textBtn).toBeTruthy();
-                  });
-                })
-    });
+        expect(imageIcon1).toBeTruthy();
+        expect(imageIcon2).toBeFalsy();
+
+        expect(imageIcon3).toBeTruthy();
+        expect(imageIcon4).toBeFalsy();
+      });
+
+      it('test icons for coditional rendering', () => {
+        const { queryByTestId } = render2Component();
+
+        const imageIcon1 = queryByTestId('maleIcon');
+        const imageIcon2 = queryByTestId('femaleIcon');
+        const imageIcon3 = queryByTestId('activeIcon');
+        const imageIcon4 = queryByTestId('inActiveIcon');
+
+        expect(imageIcon1).toBeFalsy();
+        expect(imageIcon2).toBeTruthy();
+
+        expect(imageIcon3).toBeFalsy();
+        expect(imageIcon4).toBeTruthy();
+      });
 
 })

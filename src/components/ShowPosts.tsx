@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { CommentType, PostType } from "../model/Models";
-import closeBtn from '../assets/gen034.svg'
 import './style/ShowStyle.css';
 import { userComments } from "../api/UserRepo";
 import ShowComments from "./ShowComments";
+import closeBtn from '../assets/gen034.svg'
 
 type propsParm = {
-    onClose: VoidFunction,
+    // onClose: VoidFunction,
     onData: PostType
 }
 
@@ -19,24 +19,19 @@ export default function ShowPosts(props: propsParm): JSX.Element {
     const [btnComment, setBtnComment] = useState(false)
     const [postId, setpostId] = useState(0)
 
-    const closeComponent = () => {
-        props.onClose()
-    }
-
     const getUserComments = async (postId: number) => {
         setBtnComment(true)
         setpostId(postId)
         setLoading(true)
             const ourData = await userComments(postId)
+            console.log(ourData);
+            
             setListOfComments(ourData?.data)
             setLoading(false)
     }
 
     return(
         <div data-testid="rootShowPosts" className="rootContainer">
-        <button data-testid="btnClose" className="btnClose" onClick={closeComponent}>
-            <img className="ImageIcon" src={closeBtn}></img>
-        </button>
 
         <h3 data-testid="headlineName" className="headlineDetails">Posts</h3>
         <ul>
@@ -50,18 +45,22 @@ export default function ShowPosts(props: propsParm): JSX.Element {
                         {loading &&  listOfComments.length === 0 ?
                         <p data-testid="loadingText" className="btnText">...Loading</p>
                         :
-                        <p className="btnText">Comments</p>
+                        <p data-testid="CommentText" className="btnText">Comments</p>
                         }
                     </button>
                 </div>
         </ul>
 
         {btnComment && listOfComments[0]?.post_id === postId ?
-                <div data-testid="detailsContainer" className="detailsContainer">
+                <div data-testid="rootDetailsCountainer" className="detailsContainer">
+                    <button data-testid="btnClose" className="btnClose" onClick={() => setBtnComment(false)}>
+                        <img className="ImageIcon" src={closeBtn}></img>
+                    </button> 
+                <div data-testid="detailsContainer">
                     {listOfComments?.map(((comments: CommentType) => {
-                        return(<ShowComments data-testid="listCommentsComp" key={comments.id} onClose={() => setBtnComment(false)}
-                                    onData={comments}/> )}
+                        return(<ShowComments data-testid="listCommentsComp" key={comments.id} onData={comments}/> )}
                     ))}
+                </div>
                 </div>
             :
             <></>

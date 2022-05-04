@@ -37,7 +37,7 @@ export type missionType = {
 
 export type missionPayload = {
             orbit: string;
-            nationality: string;
+            nationality: string | null;
             manufacturer: string;
             __typename: string;
 }

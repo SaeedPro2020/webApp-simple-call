@@ -11,10 +11,9 @@ const mockedCommentAxios = axios as jest.Mocked<typeof axios>;
 describe('ShowPosts component', () =>{
 
   const setBtnPosts: VoidFunction = jest.fn();
-  const setBtnComments: VoidFunction = jest.fn();
   
     const renderComponent  = () => (render(
-        <ShowPosts onClose={setBtnPosts} onData={{
+        <ShowPosts onData={{
             id: 0,
             user_id: 0,
             title: "title",
@@ -26,24 +25,6 @@ describe('ShowPosts component', () =>{
       <UserProfile id={0} name={"Saeed"} email={"email@gmail.com"} gender={"male"} status={"active"} />
   ));
 
-  const renderChildomponent  = () => (render(
-    <ShowComments onClose={setBtnComments} onData={{
-      id: 0,
-      post_id: 12,
-      name: "Jon",
-      email: "Jon@gmail.com",
-      body: "one body"
-    }} />
-));
-
-    it('render h3', () => {
-
-        const { queryByTestId } = renderComponent();
-
-        const h3 = queryByTestId("headlineName");
-        expect(h3).toBeTruthy();
-    });
-
     it('IF btn comment click', async () =>{
         const { getByText, queryByTestId } = renderComponent();
 
@@ -54,7 +35,7 @@ describe('ShowPosts component', () =>{
                     expect(textBtn).toBeTruthy();
                   });
     });
-// 
+
     it('IF btn close click', async () =>{
       const { getByTestId } = renderComponent();
 
@@ -69,35 +50,29 @@ describe('ShowPosts component', () =>{
                 });
   });
 
-    it('IF btn Comments clicked and have data', async () =>{
-        const { getByText, queryByTestId } = renderComponent();
+  it('should render list of users', async () =>{
 
-        act(async () => {
-                // Provide the data object to be returned
-                mockedCommentAxios.get.mockResolvedValue({
-                    data: [
-                      {    
-                        id: 0,
-                        post_id: 12,
-                        name: 'Jon',
-                        email: 'Jon@gmail.com',
-                        body: 'one body'
-                      }
-                    ],
-                  });
+    const { getByText, queryByTestId } = renderComponent();
 
-                  fireEvent.click(getByText('Comments'));
+        // Provide the data object to be returned.
+        mockedCommentAxios.get.mockResolvedValue({
+          data: [
+            {    
+              id: 0,
+              post_id: 0,
+              name: 'Saeed',
+              email: 'test@gmail.com',
+              body: 'a body',
+            }
+          ],
+        });
 
-                  waitFor(() => {
-                    const listOfComments = queryByTestId('listCommentsComp');
-                    const divContainer = queryByTestId("detailsContainer")
-                    expect(listOfComments).toBeTruthy();
-                    expect(divContainer).toBeTruthy();
-                    expect(listOfComments).toBeCalledTimes(1);
-                  });
+    fireEvent.click(getByText('Comments'));
 
-                })
-                
+    await waitFor(() => {
+      const userList = queryByTestId('detailsContainer');
+      expect(userList).toBeTruthy();
     });
+  });
 
 });

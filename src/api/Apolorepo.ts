@@ -23,3 +23,20 @@ import {
       }
     }
   }`;
+
+  // export const ADD_MISSIONS = gql`
+  // mutation AddMission($name: String!, $website: String!, $manufacturers: String!, $orbit: String!,
+  //   $nationality: String!, $manufacturer: String!) {
+  //   addMission(name: $name, website: $website, manufacturers: $manufacturers,
+  //     payloads: {
+  //       $orbit
+  //       $nationality
+  //       $manufacturer
+  //     }) {
+  //     id
+  //     name
+  //     website
+  //     manufacturers
+  //     payloads
+  //   }
+  // }`;
