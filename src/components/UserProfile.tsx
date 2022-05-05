@@ -77,7 +77,7 @@ export default function UserProfile(props: userType): JSX.Element {
 
                 {btnPost && listOfPosts[0]?.user_id === props.id ?
                 <div data-testid="rootDetailsCountainer" className="detailsContainer">
-                    <button data-testid="btnClose" className="btnClose" onClick={() => setBtnPost(false)}>
+                    <button data-testid="btnClose1" className="btnClose" onClick={() => setBtnPost(false)}>
                         <img className="ImageIcon" src={closeBtn}></img>
                     </button> 
                     <div data-testid="detailsPostContainer">

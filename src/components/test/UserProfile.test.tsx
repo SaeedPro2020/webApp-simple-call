@@ -52,6 +52,34 @@ describe('UserProfile', () =>{
         });
       });
 
+      it('Test btn close posts components', async () =>{
+
+        const { getByText, queryByTestId, getByTestId } = renderComponent();
+    
+            // Provide the data object to be returned
+            mockedPostAxios.get.mockResolvedValue({
+              data: [
+                {    
+                    id: 0,
+                    user_id: 12,
+                    title: "title",
+                    body: "a body",
+                }
+              ],
+            });
+    
+        fireEvent.click(getByText('Posts'));
+    
+        await waitFor(async () => {
+          fireEvent.click(getByTestId('btnClose1'));
+          await waitFor (() => {
+            const PostList = queryByTestId('detailsPostContainer');
+            expect(PostList).toBeFalsy();
+          })
+        });
+      });
+
+
       it('test icons for coditional rendering', () => {
         const { queryByTestId } = renderComponent();
 

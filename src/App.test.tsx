@@ -3,9 +3,9 @@ import { render, fireEvent, waitFor } from '@testing-library/react';
 import App from './App';
 import axios from 'axios';
 import { ApolloProvider } from '@apollo/client';
-import { client, EXCHANGE_MISSIONS } from './api/Apolorepo';
 import { MockedProvider } from '@apollo/client/testing';
 import { GraphQLError } from 'graphql/error/GraphQLError';
+import { client } from './api/Apolorepo';
 
 // Mock jest and set the type
 jest.mock('axios');
@@ -58,7 +58,7 @@ describe('App', () =>{
   // it('should render missionComponents', async () => {
   //   const missionMock = {
   //     request: {
-  //       query: EXCHANGE_MISSIONS,
+  //       query: EXCHANGE_USER,
   //       variables: { nationality: 'missions' },
   //     },
   //     result: {
@@ -91,7 +91,7 @@ describe('App', () =>{
   // it('should render missionComponents', async () => {
   //   const missionMock = {
   //     request: {
-  //       query: EXCHANGE_MISSIONS
+  //       query: EXCHANGE_USER
   //     },
   //     result: {
   //       errors: [new GraphQLError('Error!')],

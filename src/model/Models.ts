@@ -20,24 +20,3 @@ export type CommentType = {
     email: string;
     body: string;
 }
-
-
-export type missionsType = {
-    missions: missionType[]
-}
-
-
-export type missionType = {
-    name: string;
-    website: string;
-    __typename: string;
-    manufacturers: string[];
-    payloads: missionPayload[];
-}
-
-export type missionPayload = {
-            orbit: string;
-            nationality: string | null;
-            manufacturer: string;
-            __typename: string;
-}

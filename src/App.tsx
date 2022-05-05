@@ -1,17 +1,16 @@
 import React, { useState } from "react";
-import { EXCHANGE_MISSIONS } from "./api/Apolorepo";
 import { userDetails } from "./api/UserRepo";
 import "./App.css";
-import { useQuery } from "@apollo/client";
-import MissionsComp from "./components/MissionsComp";
+import UserComp from "./components/UserComp";
 import UserProfile from "./components/UserProfile";
-import { missionsType, userType } from "./model/Models";
+import { userType } from "./model/Models";
 import AddMission from "./components/AddMission";
+import { useUsersQuery } from "./api/graphql-frontend";
 
 export default function App() {
   const userData: userType[] = []
   const [listOfUsers, setListOfUsers] = useState(userData)
-  const { loading, error, data, refetch } = useQuery<missionsType>(EXCHANGE_MISSIONS);
+  const { loading, error, data, refetch } = useUsersQuery();
 
   const [btnGetUser, setBtnGetUser] = useState(false)
   const [btnLauncData, setbtnLauncData] = useState(false)
@@ -47,8 +46,8 @@ export default function App() {
         : 
         <div>
           <AddMission />
-        {data?.missions.map((mission, i) => {
-           return (<MissionsComp data-testid="missionComponents" key={i} name={mission.name} payloads={mission.payloads}/>)
+        {data?.users.map((user, i) => {
+           return (<UserComp data-testid="missionComponents" key={i} name={user.name}/>)
         })} 
         </div>
         }

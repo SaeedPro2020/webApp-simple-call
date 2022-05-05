@@ -36,20 +36,6 @@ describe('ShowPosts component', () =>{
                   });
     });
 
-    it('IF btn close click', async () =>{
-      const { getByTestId } = renderComponent();
-
-      const { queryByTestId } = renderParentComponent();
-
-                fireEvent.click(getByTestId('btnClose'));
-
-                await waitFor(() => {
-                  const rootElement = queryByTestId('listPostsComp');
-                  expect(rootElement).toBeFalsy();
-                  expect(setBtnPosts).toBeCalled()
-                });
-  });
-
   it('should render list of users', async () =>{
 
     const { getByText, queryByTestId } = renderComponent();
@@ -72,6 +58,35 @@ describe('ShowPosts component', () =>{
     await waitFor(() => {
       const userList = queryByTestId('detailsContainer');
       expect(userList).toBeTruthy();
+    });
+  });
+
+  it('If btn close clicked', async () =>{
+
+    const { getByText, queryByTestId, getByTestId } = renderComponent();
+
+        // Provide the data object to be returned.
+        mockedCommentAxios.get.mockResolvedValue({
+          data: [
+            {    
+              id: 0,
+              post_id: 0,
+              name: 'Saeed',
+              email: 'test@gmail.com',
+              body: 'a body',
+            }
+          ],
+        });
+
+    fireEvent.click(getByText('Comments'));
+
+    await waitFor(async () => {
+      fireEvent.click(getByTestId('btnClose'));
+      await waitFor(() =>{
+        const userList = queryByTestId('detailsContainer');
+        expect(userList).toBeFalsy();
+      })
+      
     });
   });
 
