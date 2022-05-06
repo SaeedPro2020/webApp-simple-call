@@ -2,16 +2,27 @@ import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import App from './App';
 import axios from 'axios';
-import { ApolloProvider } from '@apollo/client';
-import { MockedProvider } from '@apollo/client/testing';
-import { GraphQLError } from 'graphql/error/GraphQLError';
+import { ApolloProvider, gql } from '@apollo/client';
 import { client } from './api/Apolorepo';
+import { customRendere } from './customRenderer';
+
+export const EXCHANGE_USER = gql`
+query Users {
+  users {
+    id
+    name
+    rocket
+  }
+}`;
+
+const waitForData = () => new Promise(resolve => setTimeout(resolve, 1)); // highlight-line
 
 // Mock jest and set the type
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('App', () =>{
+
   const renderComponent  = () => (render(
     <ApolloProvider client={client}>
       <App />
@@ -47,7 +58,7 @@ describe('App', () =>{
 
     const { getByText, queryByTestId } = renderComponent();
 
-    fireEvent.click(getByText('Get Missions'));
+    fireEvent.click(getByText('Get Users Apollo'));
 
     await waitFor(() => {
       const userList = queryByTestId('missionsRoot');
@@ -55,62 +66,58 @@ describe('App', () =>{
     });
   });
 
-  // it('should render missionComponents', async () => {
-  //   const missionMock = {
-  //     request: {
-  //       query: EXCHANGE_USER,
-  //       variables: { nationality: 'missions' },
-  //     },
-  //     result: {
-  //       data: { missions: [{ 
-  //         name: 'Thaicom', 
-  //         website: 'http://www.thaicom.net/en/satellites/overview',
-  //         __typename:'Mission',
-  //         manufacturers:['Orbital ATK', 'something'],
-  //         payloads: [{manufacturer: 'Orbital ATK', nationality: 'Thailand', orbit: 'GTO', __typename:'Payload'}] 
-  //     }] },
-  //     },
-  //   };
-  
-  //   const component = () => (render(
-  //     <MockedProvider mocks={[missionMock]} addTypename={false}>
-  //       <App />
-  //     </MockedProvider>,
-  //   ));
+  it('should render userComponents', async () => {
+    const userMock = {
+      request: {
+        query: EXCHANGE_USER,
+        variables: {},
+      },
+      result: {
+        data: {
+          users: [
+            {
+              name: " nice",
+              rocket: "ok",
+              timestamp: "2022-05-05T14:56:39.148105+00:00",
+              id: "4b795e64-0512-4ea5-bba1-8f9d66cb1875",
+              twitter: "good"
+            }
+          ]
+          }
+    }
+  };
 
-  //   const { getByText, queryByTestId } = component();
+    const { getByText, queryByTestId } = customRendere(<App/>, [userMock]);
 
-  //   fireEvent.click(getByText('Get Missions'))
-  //   await new Promise(resolve => setTimeout(resolve, 0)); // highlight-line
+    fireEvent.click(getByText('Get Users Apollo'))
+    await waitForData();
   
-  //   const missionList = queryByTestId('missionComponents');
-  //   expect(missionList).toBeTruthy();
+    await waitFor(() => {
+    const missionList = queryByTestId('UserName');
+    expect(missionList).toBeTruthy();
+    })
     
-  // });
+  });
 
-  // it('should render missionComponents', async () => {
-  //   const missionMock = {
-  //     request: {
-  //       query: EXCHANGE_USER
-  //     },
-  //     result: {
-  //       errors: [new GraphQLError('Error!')],
-  //     },
-  //   }
+  it('should render error', async () => {
+    const userMock = {
+      request: {
+        query: EXCHANGE_USER,
+        variables: {},
+      },
+      error: new Error('An error occurred'),
+  };
+
+    const { getByText, queryByTestId } = customRendere(<App/>, [userMock]);
+
+    fireEvent.click(getByText('Get Users Apollo'))
+    await waitForData();
   
-  //   const component = () => (render(
-  //     <MockedProvider mocks={[missionMock]} addTypename={false}>
-  //       <App />
-  //     </MockedProvider>,
-  //   ));
-
-  //   const { getByText, queryByTestId } = component();
-
-  //   fireEvent.click(getByText('Get Missions'))
-  //   await new Promise(resolve => setTimeout(resolve, 0)); // highlight-line
-  
-  //   const error = queryByTestId('error');
-  //   expect(error).toBeTruthy();
+    await waitFor(() => {
+    const textError = queryByTestId('error');
+    expect(textError).toBeTruthy();
+    })
     
-  // });
+  });
+
 })

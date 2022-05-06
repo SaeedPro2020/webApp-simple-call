@@ -4,9 +4,9 @@ import "./App.css";
 import UserComp from "./components/UserComp";
 import UserProfile from "./components/UserProfile";
 import { userType } from "./model/Models";
-import AddMission from "./components/AddMission";
+import AddMission from "./components/AddUser";
 import { useUsersQuery } from "./api/graphql-frontend";
-
+// 
 export default function App() {
   const userData: userType[] = []
   const [listOfUsers, setListOfUsers] = useState(userData)
@@ -34,7 +34,7 @@ export default function App() {
     <div data-testid="AppCompo" className="App">
 
       <button disabled={btnGetUser} onClick={() => getListOfUsers()}>Get users</button>
-      <button disabled={btnLauncData} onClick={() => getMissionsData()}>Get Missions</button>
+      <button disabled={btnLauncData} onClick={() => getMissionsData()}>Get Users Apollo</button>
 
       {!btnGetUser && btnLauncData ?
       <div data-testid="missionsRoot">
