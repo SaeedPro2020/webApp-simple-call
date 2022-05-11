@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import './style/UserProfile.css'
 import imageProfile from '../assets/blank.png'
 import mailIcon from '../assets/empty-email.svg'
 import maleAvetar from '../assets/009-boy-4.svg'
@@ -10,6 +9,7 @@ import { userPosts } from "../api/UserRepo";
 import { PostType, userType } from "../model/Models";
 import ShowPosts from "./ShowPosts";
 import closeBtn from '../assets/gen034.svg'
+import { ButtonText, CardIcon, CloseBtn, Container, UserCard, UserPosts } from "./styles/UserProfile.styled";
 
 export default function UserProfile(props: userType): JSX.Element {
 
@@ -29,68 +29,68 @@ export default function UserProfile(props: userType): JSX.Element {
     }
     
     return(
-        <div className="rootElement">
+        <Container>
 
-        <div className="UserProfile">
+        <UserCard>
            
-            <img className="ImageProfile" src={imageProfile}></img>
+            <img src={imageProfile}></img>
             
-            <div className="textDetails">
-                <h3 data-testid="headlineName" className="UserName">{props.name}</h3>
+            <div>
+                <h3 data-testid="headlineName">{props.name}</h3>
 
-                <div className="IconText">
-                    <img className="ImageIcon" src={mailIcon}></img>
-                    <p className="OtherDetails">{props.email}</p>
-                </div>
+                <CardIcon>
+                    <img src={mailIcon}></img>
+                    <p>{props.email}</p>
+                </CardIcon>
 
-                <div className="IconText">
+                <CardIcon>
                     {props.gender === "male" ?
-                    <img data-testid="maleIcon" className="ImageIcon" src={maleAvetar}></img>
+                    <img data-testid="maleIcon" src={maleAvetar}></img>
                     :
-                    <img data-testid="femaleIcon" className="ImageIcon" src={femaleAvetar}></img>
+                    <img data-testid="femaleIcon" src={femaleAvetar}></img>
                     }
-                    <p className="OtherDetails">{props.gender}</p>
-                </div>
+                    <p>{props.gender}</p>
+                </CardIcon>
 
-                <div className="IconText">
+                <CardIcon>
                     {props.status === "active" ?
-                    <img data-testid="activeIcon" className="ImageIcon" src={activeStatus}></img>
+                    <img data-testid="activeIcon" src={activeStatus}></img>
                     :
-                    <img data-testid="inActiveIcon" className="ImageIcon" src={inactiveStatus}></img>
+                    <img data-testid="inActiveIcon" src={inactiveStatus}></img>
                     }
-                    <p className="OtherDetails">{props.status}</p>
-                </div>
+                    <p>{props.status}</p>
+                </CardIcon>
 
-                <div className="btnsContainer">
-                    <button data-testid="btnPosts" key={props.id} className="Buttons" onClick={getUserPosts}>
+                <div>
+                    <button data-testid="btnPosts" key={props.id} onClick={getUserPosts}>
                         {loading &&  listOfPosts?.length === 0 ?
-                        <p data-testid="loadingText" className="btnText">...Loading</p>
+                        <ButtonText data-testid="loadingText">...Loading</ButtonText>
                         :
-                        <p className="btnText">Posts</p>
+                        <ButtonText>Posts</ButtonText>
                         }
                     </button>
                 </div>
 
             </div>
 
-        </div>
+        </UserCard>
 
                 {btnPost && listOfPosts[0]?.user_id === props.id ?
-                <div data-testid="rootDetailsCountainer" className="detailsContainer">
-                    <button data-testid="btnClose1" className="btnClose" onClick={() => setBtnPost(false)}>
-                        <img className="ImageIcon" src={closeBtn}></img>
-                    </button> 
+                <UserPosts data-testid="rootDetailsCountainer">
+                    <CloseBtn data-testid="btnClose1" onClick={() => setBtnPost(false)}>
+                        <img src={closeBtn}></img>
+                    </CloseBtn> 
                     <div data-testid="detailsPostContainer">
                         {listOfPosts?.map((posts: PostType) => {
                             return (<ShowPosts data-testid="listPostsComp" key={posts.id} onData={posts} />);
                         }
                         )}
                     </div>
-                    </div>
+                    </UserPosts>
                 :
                 <></>
                 }
 
-    </div>
+    </Container>
     )
 }

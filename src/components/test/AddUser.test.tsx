@@ -104,8 +104,6 @@ mutation Mutation($objects: [users_insert_input!]!) {
             error: new Error('An error occurred'),
         };
 
-        // const { getByTestId, getByText } = customRendere(<AddUser/>, [userMock2]);
-
         const renderComponent2  = () => (render(
             <MockedProvider mocks={[userMock2]} addTypename={false}>
                 <AddUser />

@@ -1,6 +1,6 @@
 import React from "react";
 import { CommentType } from "../model/Models"
-import './style/ShowStyle.css';
+import { Container } from "./styles/ShowStyle.styled";
 
 type propsParm = {
     onData: CommentType
@@ -10,16 +10,16 @@ type propsParm = {
 export default function ShowComments(props: propsParm): JSX.Element {
 
     return(
-        <div className="rootContainer">
-    <h3 data-testid="headlineName" className="headlineDetails">Comments</h3>
+        <Container>
+    <h3 data-testid="headlineName">Comments</h3>
     <ul>
             <div>
-                <li className="postLists">
+                <li>
                     {"Name: " + props.onData?.name}
                 </li>
-                <li className="postLists">{"Body" + props.onData?.body}</li>
+                <li>{"Body" + props.onData?.body}</li>
             </div>
     </ul>
-</div>
+</Container>
     )
 }

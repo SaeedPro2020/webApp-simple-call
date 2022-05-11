@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import { useMutationMutation, Users_Insert_Input, useUsersQuery } from "../api/graphql-frontend";
+import { Container } from "./styles/AddUser.styled";
 
 export default function AddMission(): JSX.Element {
 
@@ -10,8 +11,8 @@ export default function AddMission(): JSX.Element {
     const { refetch } = useUsersQuery();
     
 
-    const submitNewMission = async () => {
-
+    const submitUserData = async () => {
+// date-fns(not using moments)
         const userId = uuidv4().toString();
         const dateObj = new Date();
         const month = dateObj.getUTCMonth() + 1; //months from 1-12
@@ -28,14 +29,16 @@ export default function AddMission(): JSX.Element {
 
     return(
         
-        <div style={{marginTop: 50, display: 'flex', flexDirection:'column', alignItems:'center'}}>
-            
-            <button style={{marginLeft: 100, marginBottom:20, width:150}} onClick={submitNewMission}>Add User</button>
+        
+            <Container>
+            <button 
+            onClick={submitUserData}>
+                <p>Add User</p>
+            </button>
 
                 <input 
                 data-testid="nameInput"
                 type="text" 
-                style={{width: 250, marginLeft: 80}}
                 id="Name"
                 placeholder="Name"
                 value={name}
@@ -44,12 +47,10 @@ export default function AddMission(): JSX.Element {
                 <input 
                 data-testid="nameRocket"
                 type="text" 
-                style={{width: 250, marginLeft: 80}}
                 id="Rocket"
                 placeholder="Rocket"
                 value={rocket}
                 onChange={e => setRocket(e.target.value)}/>
-
                 {loading && !error && !data ?
                     <h1 data-testid="operationLoading">Loading...</h1>
                 :
@@ -62,5 +63,5 @@ export default function AddMission(): JSX.Element {
                 <></>
                 }
 
-        </div>
+    </Container>
     )}

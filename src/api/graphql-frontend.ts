@@ -1327,6 +1327,14 @@ export type MutationMutationVariables = Exact<{
 
 export type MutationMutation = { __typename?: 'Mutation', insert_users?: { __typename?: 'users_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'users', id: any, name?: string | null, rocket?: string | null, timestamp: any, twitter?: string | null }> } | null };
 
+export type Update_UsersMutationVariables = Exact<{
+  where: Users_Bool_Exp;
+  set?: InputMaybe<Users_Set_Input>;
+}>;
+
+
+export type Update_UsersMutation = { __typename?: 'Mutation', update_users?: { __typename?: 'users_mutation_response', returning: Array<{ __typename?: 'users', id: any, name?: string | null }> } | null };
+
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1373,6 +1381,43 @@ export function useMutationMutation(baseOptions?: Apollo.MutationHookOptions<Mut
 export type MutationMutationHookResult = ReturnType<typeof useMutationMutation>;
 export type MutationMutationResult = Apollo.MutationResult<MutationMutation>;
 export type MutationMutationOptions = Apollo.BaseMutationOptions<MutationMutation, MutationMutationVariables>;
+export const Update_UsersDocument = gql`
+    mutation Update_users($where: users_bool_exp!, $set: users_set_input) {
+  update_users(where: $where, _set: $set) {
+    returning {
+      id
+      name
+    }
+  }
+}
+    `;
+export type Update_UsersMutationFn = Apollo.MutationFunction<Update_UsersMutation, Update_UsersMutationVariables>;
+
+/**
+ * __useUpdate_UsersMutation__
+ *
+ * To run a mutation, you first call `useUpdate_UsersMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdate_UsersMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUsersMutation, { data, loading, error }] = useUpdate_UsersMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *      set: // value for 'set'
+ *   },
+ * });
+ */
+export function useUpdate_UsersMutation(baseOptions?: Apollo.MutationHookOptions<Update_UsersMutation, Update_UsersMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Update_UsersMutation, Update_UsersMutationVariables>(Update_UsersDocument, options);
+      }
+export type Update_UsersMutationHookResult = ReturnType<typeof useUpdate_UsersMutation>;
+export type Update_UsersMutationResult = Apollo.MutationResult<Update_UsersMutation>;
+export type Update_UsersMutationOptions = Apollo.BaseMutationOptions<Update_UsersMutation, Update_UsersMutationVariables>;
 export const UsersDocument = gql`
     query Users {
   users {
@@ -1402,10 +1447,10 @@ export function useUsersQuery(baseOptions?: Apollo.QueryHookOptions<UsersQuery, 
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<UsersQuery, UsersQueryVariables>(UsersDocument, options);
       }
-// export function useUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UsersQuery, UsersQueryVariables>) {
-//           const options = {...defaultOptions, ...baseOptions}
-//           return Apollo.useLazyQuery<UsersQuery, UsersQueryVariables>(UsersDocument, options);
-//         }
+export function useUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UsersQuery, UsersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UsersQuery, UsersQueryVariables>(UsersDocument, options);
+        }
 export type UsersQueryHookResult = ReturnType<typeof useUsersQuery>;
-// export type UsersLazyQueryHookResult = ReturnType<typeof useUsersLazyQuery>;
+export type UsersLazyQueryHookResult = ReturnType<typeof useUsersLazyQuery>;
 export type UsersQueryResult = Apollo.QueryResult<UsersQuery, UsersQueryVariables>;

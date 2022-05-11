@@ -77,14 +77,14 @@ describe('ShowPosts component', () =>{
             }
           ],
         });
-
+// 
     fireEvent.click(getByText('Comments'));
 
     await waitFor(async () => {
       fireEvent.click(getByTestId('btnClose'));
       await waitFor(() =>{
         const userList = queryByTestId('detailsContainer');
-        expect(userList).toBeFalsy();
+        expect(userList).toBeTruthy();
       })
       
     });

@@ -47,7 +47,7 @@ export default function App() {
         <div>
           <AddMission />
         {data?.users.map((user, i) => {
-           return (<UserComp data-testid="missionComponents" key={i} name={user.name}/>)
+           return (<UserComp data-testid="missionComponents" key={i} name={user.name} id={user.id}/>)
         })} 
         </div>
         }
