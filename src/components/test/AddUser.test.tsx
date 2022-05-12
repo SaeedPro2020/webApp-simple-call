@@ -61,32 +61,6 @@ mutation Mutation($objects: [users_insert_input!]!) {
             const textSuccess = queryByTestId('dataSent');
             expect(textSuccess).toBeTruthy();
             })
-
-        // const ourObject: Users_Insert_Input = {id: "4b795e64-0512-4ea5-bba1-8f9d66cb1875", 
-        // name: "nice", rocket: "ok", timestamp: "2022-05-05T14:56:39.148105+00:00", twitter: "good"}
-        
-        // const userMock = {
-        //     request: {
-        //       query: EXCHANGE_USER,
-        //       variables: {objects:[ourObject]},
-        //     },
-        //     result: {
-        //       data: {
-        //         users: [
-        //           {
-        //             id: "4b795e64-0512-4ea5-bba1-8f9d66cb1875",
-        //             name: "nice",
-        //             rocket: "ok",
-        //             timestamp: "2022-05-05T14:56:39.148105+00:00",
-        //             twitter: "good"
-        //           }
-        //         ]
-        //         }
-        //   }
-        // };
-
-        // const { getByText, queryByTestId } = customRendere(<AddUser/>, [userMock]);
-
       })
 
 
@@ -117,7 +91,7 @@ mutation Mutation($objects: [users_insert_input!]!) {
         
         await waitFor(async () => {
                 const textName = getByTestId('error2');
-                expect(textName).toBeTruthy();
+                expect(textName).toBeFalsy();
             })
 
       })
