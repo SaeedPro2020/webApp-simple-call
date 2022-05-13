@@ -42,3 +42,4 @@ Application:
 - Integrate this graphql api: https://studio.apollographql.com/public/SpaceX-pxxbxen/home?variant=current
 - Update missions with graphQl api
 - styled component (having the list of users and each user must be represented as a card), when press the button for each user ==> edit name.
+-UI ==> Mobile first responsiveness.
