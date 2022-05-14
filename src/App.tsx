@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { userDetails } from "./api/UserRepo";
-import "./App.css";
 import UserComp from "./components/UserComp";
 import UserProfile from "./components/UserProfile";
 import { userType } from "./model/Models";
 import AddMission from "./components/AddUser";
 import { useUsersQuery } from "./api/graphql-frontend";
-// 
+import { Container } from "./App.styled";
+
 export default function App() {
   const userData: userType[] = []
   const [listOfUsers, setListOfUsers] = useState(userData)
@@ -31,7 +31,7 @@ export default function App() {
 }
 
   return (
-    <div data-testid="AppCompo" className="App">
+    <Container>
 
       <button disabled={btnGetUser} onClick={() => getListOfUsers()}>Get users</button>
       <button disabled={btnLauncData} onClick={() => getMissionsData()}>Get Users Apollo</button>
@@ -65,6 +65,6 @@ export default function App() {
       <div data-testid="emptyDiv"></div>
       }
 
-      </div>
+      </Container>
   );
 }

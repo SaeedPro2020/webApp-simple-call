@@ -9,7 +9,8 @@ import { userPosts } from "../api/UserRepo";
 import { PostType, userType } from "../model/Models";
 import ShowPosts from "./ShowPosts";
 import closeBtn from '../assets/gen034.svg'
-import { ButtonText, CardIcon, CloseBtn, Container, UserCard, UserPosts } from "./styles/UserProfile.styled";
+import { CardIcon, Container, UserCard, UserPosts } from "./styles/UserProfile.styled";
+import { ButtonText, CloseBtn } from "./styles/ShowStyle.styled";
 
 export default function UserProfile(props: userType): JSX.Element {
 
@@ -31,7 +32,8 @@ export default function UserProfile(props: userType): JSX.Element {
     return(
         <Container>
 
-        <UserCard>
+        <UserCard marginLeft='15%' marginTop='0' border='none' borderRadius='0' width='15%' bg='white'
+        hoverColor='#8f99f6' activeColor='white' transform="0px">
            
             <img src={imageProfile}></img>
             

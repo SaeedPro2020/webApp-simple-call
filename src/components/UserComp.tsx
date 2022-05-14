@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { CloseBtn, Container } from "./styles/UserProfile.styled";
+import { Container, UserCard } from "./styles/UserProfile.styled";
 import imageProfile from '../assets/blank.png';
-import { BtnConfirm, UserCard, UserPosts } from "./styles/UserComp.styled";
+import { BtnConfirm, UserPosts } from "./styles/UserComp.styled";
 import closeBtn from '../assets/gen034.svg';
 import { useUpdate_UsersMutation, useUsersQuery } from "../api/graphql-frontend";
+import { CloseBtn } from "./styles/ShowStyle.styled";
 
 type propsParm = {
     name: string | null | undefined
@@ -39,7 +40,8 @@ export default function UserComp(props: propsParm): JSX.Element {
 
     return(
         <Container>
-            <UserCard>
+            <UserCard marginLeft='40%' marginTop='10%' border='solid' borderRadius='8px' width='10%' bg='#8f99f6'
+                hoverColor='white' activeColor='white' transform='2px'>
                 <img src={imageProfile}></img>
                 <div>
                     <h3 data-testid="UserName">User Name: {props.name}</h3>

@@ -1,4 +1,17 @@
-import styled from "styled-components"
+import styled from "styled-components";
+
+interface Props {
+    marginLeft: string,
+    marginTop: string,
+    border: string,
+    borderRadius: string,
+    width: string,
+    bg: string,
+    hoverColor: string,
+    activeColor: string,
+    transform: string,
+
+}
 
 export const Container = styled.div`
 display: flex;
@@ -7,7 +20,7 @@ display: flex;
 flex-direction: column;
 `
 
-export const UserCard = styled.div`
+export const UserCard = styled.div<Props>`
 background-color: white;
 display: flex;
 flex-direction: row;
@@ -50,12 +63,26 @@ button {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    border: none;
     align-items: center;
     padding-right: 0;
     background-color: white;
-    margin-left: 15%;
+    margin-left: ${(Props) => Props.marginLeft};
+    margin-top: ${(Props) => Props.marginTop};
     text-align: center;
+    border: ${(Props) => Props.border};
+    border-radius: ${(Props) => Props.borderRadius};
+    width: ${(Props) => Props.width};
+    font-size: 1vw;
+
+    &:hover {
+        background-color: ${(Props) => Props.bg};
+        color: ${(Props) => Props.hoverColor};
+    }
+
+    &:active {
+        color: ${(Props) => Props.activeColor};
+        transform: translateY(${(Props) => Props.transform});
+    }
 }
 `
 
@@ -81,42 +108,15 @@ p {
 }
 `
 
-export const ButtonText = styled.p`
-text-align: end;
-font-size:0.8vw;
-margin-right: 2px;
-font-weight: bold;
-cursor: pointer;
-outline: none;
-
-&:hover {
-    color: #8f99f6
-}
-
-&:active {
-    color: #8f99f6;
-    transform: translateY(2px);
-}
-`;
-
 export const UserPosts = styled.div`
-background-color: white;
-display: flex;
-flex-direction: column;
-flex-wrap: wrap;
-border-radius: 10px;
-width: 40%;
-margin-left: 30%;
-margin-top: 1%;
-margin-bottom: 1%;
-text-align: left;
-`
-
-export const CloseBtn = styled.button`
-width: 1.5vw;
-margin: 0;
-align-self: flex-end;
-border: none;
-background-color: white;
-padding: 0;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    border-radius: 10px;
+    width: 40%;
+    margin-left: 30%;
+        margin-top: 1%;
+    margin-bottom: 1%;
+    text-align: left;
 `;

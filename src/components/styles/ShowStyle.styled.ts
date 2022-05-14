@@ -1,10 +1,11 @@
 import styled from "styled-components";
-
+// 
 export const Container = styled.div`
 display: flex;
 flex-direction: column;
 padding-bottom: 5%;
 padding-left: 1%;
+align-items: center;
 
 h3 {
     text-align: center;
