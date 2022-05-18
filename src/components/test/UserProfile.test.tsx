@@ -10,11 +10,23 @@ const mockedPostAxios = axios as jest.Mocked<typeof axios>;
 describe('UserProfile', () =>{
 
     const renderComponent  = () => (render(
-        <UserProfile id={12} name={"Saeed"} email={"email@gmail.com"} gender={"male"} status={"active"} />
+        <UserProfile userData={{
+        id: 0,
+        name: "Saeed",
+        email: "saeed@gmail",
+        gender: "male",
+        status: "active"
+      }} image={"something"} />
     ));
 
     const render2Component  = () => (render(
-        <UserProfile id={12} name={"Francesca"} email={"Francesca@gmail.com"} gender={"female"} status={"inactive"} />
+        <UserProfile userData={{
+          id: 0,
+          name: "Saeed",
+          email: "saeed@gmail",
+          gender: "male",
+          status: "active"
+        }} image={"something"} />
     ));
 
     it('IF btn post click', async () =>{

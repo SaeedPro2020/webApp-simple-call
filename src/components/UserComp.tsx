@@ -40,8 +40,8 @@ export default function UserComp(props: propsParm): JSX.Element {
 
     return(
         <Container>
-            <UserCard marginLeft='40%' marginTop='10%' border='solid' borderRadius='8px' width='10%' bg='#8f99f6'
-                hoverColor='white' activeColor='white' transform='2px'>
+            <UserCard marginLeft='25%' marginTop='20%' border='solid' borderRadius='4px' width='12%' bg='#8f99f6'
+                hoverColor='white' activeColor='white' transform='2px' borderWidth='1px'>
                 <img src={imageProfile}></img>
                 <div>
                     <h3 data-testid="UserName">User Name: {props.name}</h3>

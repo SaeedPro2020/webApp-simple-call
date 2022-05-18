@@ -38,7 +38,7 @@ export default function ShowPosts(props: propsParm): JSX.Element {
                     <li>
                         {"Title: " + props.onData?.title}
                     </li>
-                    <li className="postLists">{"Body" + props.onData?.body}</li>
+                    <li>{"Body: " + props.onData?.body}</li>
 
                     <button onClick={() => getUserComments(props.onData.id)}>
                         {loading &&  listOfComments.length === 0 ?

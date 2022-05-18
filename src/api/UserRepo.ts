@@ -5,7 +5,7 @@ import { CommentType, PostType, userType } from '../model/Models';
 const BASE_URL = 'https://gorest.co.in';
 
 export async function userDetails() {
-    const data = await axios.get<Array<userType>>(BASE_URL + '/public/v2/users');
+    const data = await axios.get<Array<userType>>(BASE_URL + '/public/v2/users?page=3');
     return data;
 }
 

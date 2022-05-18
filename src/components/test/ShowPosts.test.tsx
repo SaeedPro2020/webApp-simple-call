@@ -22,7 +22,13 @@ describe('ShowPosts component', () =>{
     ));
 
     const renderParentComponent  = () => (render(
-      <UserProfile id={0} name={"Saeed"} email={"email@gmail.com"} gender={"male"} status={"active"} />
+      <UserProfile userData={{
+        id: 0,
+        name: "Saeed",
+        email: "saeed@gmail",
+        gender: "male",
+        status: "active"
+      }} image={"something"} />
   ));
 
     it('IF btn comment click', async () =>{
