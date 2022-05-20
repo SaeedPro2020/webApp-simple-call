@@ -23,10 +23,10 @@ mutation Mutation($objects: [users_insert_input!]!) {
     }
   }`;
 
-  const waitForData = () => new Promise(resolve => setTimeout(resolve, 1)); // highlight-line
+  const waitForData = () => new Promise(resolve => setTimeout(resolve, 0)); // highlight-line
 
 
-  describe('App', () =>{
+  describe('Add user', () =>{
     jest.clearAllMocks();
 
     const renderComponent  = () => (render(
@@ -85,7 +85,7 @@ mutation Mutation($objects: [users_insert_input!]!) {
           ));
 
           const { getByTestId, getByText } = renderComponent2()
-
+          
         fireEvent.click(getByText('Add User'))
         await waitForData();
         

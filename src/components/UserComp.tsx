@@ -7,10 +7,10 @@ import { useUpdate_UsersMutation, useUsersQuery } from "../api/graphql-frontend"
 import { CloseBtn } from "./styles/ShowStyle.styled";
 
 type propsParm = {
-    name: string | null | undefined
-    id: string
-}
-// 
+    name: string | null | undefined;
+    id: string;
+};
+
 export default function UserComp(props: propsParm): JSX.Element {
     // console.log(props.payloads)
     const [btnEditName, setBtnEditName] = useState(false)
@@ -19,12 +19,12 @@ export default function UserComp(props: propsParm): JSX.Element {
     const { refetch } = useUsersQuery();
 
     const EditName = () => {
-        console.log(`We are going to edit the user name ${props.name} here`)
+        // console.log(`We are going to edit the user name ${props.name} here`)
         setBtnEditName(true)
     }
 
     const updateData = async () => {
-        console.log('We perform a mutation to send the data and update UI')
+        // console.log('We perform a mutation to send the data and update UI')
         await updateUsersMutation({ variables: {where:{
             "id": {
               "_eq": `${props.id}`
@@ -40,18 +40,18 @@ export default function UserComp(props: propsParm): JSX.Element {
 
     return(
         <Container>
-            <UserCard marginLeft='25%' marginTop='20%' border='solid' borderRadius='4px' width='12%' bg='#8f99f6'
+            <UserCard data-testid="ListOfUsers" marginLeft='25%' marginTop='20%' border='solid' borderRadius='4px' width='12%' bg='#8f99f6'
                 hoverColor='white' activeColor='white' transform='2px' borderWidth='1px'>
                 <img src={imageProfile}></img>
                 <div>
                     <h3 data-testid="UserName">User Name: {props.name}</h3>
-                    <button onClick={EditName}>Edit</button>
+                    <button data-testid="btnEditName" onClick={EditName}>Edit</button>
                 </div>
             </UserCard>
             
             {btnEditName ? 
-                <UserPosts>
-                    <CloseBtn data-testid="btnClose1" onClick={() => setBtnEditName(false)}>
+                <UserPosts data-testid="formEditName">
+                    <CloseBtn data-testid="btnClose3" onClick={() => setBtnEditName(false)}>
                         <img src={closeBtn}></img>
                     </CloseBtn>
 

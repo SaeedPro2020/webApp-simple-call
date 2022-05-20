@@ -3,7 +3,7 @@ import { userDetails } from "./api/UserRepo";
 import UserComp from "./components/UserComp";
 import UserProfile from "./components/UserProfile";
 import { userType } from "./model/Models";
-import AddMission from "./components/AddUser";
+import AddUser from "./components/AddUser";
 import { useUsersQuery } from "./api/graphql-frontend";
 import { Container } from "./App.styled";
 
@@ -65,7 +65,7 @@ export default function App() {
         <h1 data-testid="error">Error :(</h1>
         : 
         <div>
-          <AddMission />
+          <AddUser />
         {data?.users.map((user, i) => {
            return (<UserComp data-testid="missionComponents" key={i} name={user.name} id={user.id}/>)
         })} 

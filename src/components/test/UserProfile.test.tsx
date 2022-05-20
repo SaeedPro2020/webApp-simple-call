@@ -11,7 +11,7 @@ describe('UserProfile', () =>{
 
     const renderComponent  = () => (render(
         <UserProfile userData={{
-        id: 0,
+        id: 12,
         name: "Saeed",
         email: "saeed@gmail",
         gender: "male",
@@ -22,10 +22,10 @@ describe('UserProfile', () =>{
     const render2Component  = () => (render(
         <UserProfile userData={{
           id: 0,
-          name: "Saeed",
-          email: "saeed@gmail",
-          gender: "male",
-          status: "active"
+          name: "Sara",
+          email: "sara@gmail",
+          gender: "female",
+          status: "inactive"
         }} image={"something"} />
     ));
 

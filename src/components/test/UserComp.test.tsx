@@ -1,18 +1,95 @@
-import { render } from "@testing-library/react"
-import MissionsComp from "../UserComp";
+import { ApolloProvider, gql } from '@apollo/client';
+import { fireEvent, render, waitFor } from '@testing-library/react';
+import { client } from '../../api/Apolorepo';
+import UserComp from '../UserComp';
 
-describe('MissionsComp component', () => {
+
+export const UPDATE_NAME = gql`
+mutation Update_users($where: users_bool_exp!, $set: users_set_input) {
+    update_users(where: $where, _set: $set) {
+      returning {
+        id
+        name
+      }
+    }
+  }`;
+
+  const waitForData = () => new Promise(resolve => setTimeout(resolve, 0)); // highlight-line
+
+
+  describe('User Component, edit name', () =>{
+    jest.clearAllMocks();
+
     const renderComponent  = () => (render(
-        <MissionsComp name={"A user name"} id={"158fff53-2a76-47c9-8fad-80ee707fb73e"} />
-    ));
+        <ApolloProvider client={client}>
+            <UserComp name={'Saeed'} id={"4b795e64-0512-4ea5-bba1-8f9d66cb1875"} />
+        </ApolloProvider>
+      ));
 
-    it('IF we had a name and payload props', () =>{
-        const { queryByTestId } = renderComponent();
+      it('Check button edit', async () => {
+        const { getByText, queryByTestId  } = renderComponent();
 
-        const h3Name = queryByTestId('UserName');
+        fireEvent.click(getByText('Edit'))
+        await waitFor(() => {
+            const formEditName = queryByTestId('formEditName');
+            expect(formEditName).toBeTruthy();
+            })
+
+      })
+
+      it('Test update operation for a user name', async () => {
+
+          const { getByText, getByTestId, queryByTestId  } = renderComponent();
+          fireEvent.click(getByText('Edit'))
+
+          await waitFor(async () => {
+            const firstInput = getByTestId("nameInput")
+            fireEvent.change(firstInput, { target: { value: 'Sara' } })
+            fireEvent.click(getByText('Confirm'))
+            await waitForData();
+
+                waitFor(() => {
+                    expect(getByText('User Name: Sara')).toBeInTheDocument()
+                    const Editname = queryByTestId('formEditName');
+                    expect(Editname).toBeFalsy();
+                })
+
+            })
+
+      })
 
 
-        expect(h3Name).toBeTruthy();
+      it('Test update operation', async () => {
+
+          const { getByText, getByTestId, queryByTestId  } = renderComponent();
+          fireEvent.click(getByText('Edit'))
+
+          await waitFor(async () => {
+            fireEvent.click(getByText('Confirm'))
+
+               await waitFor(() => {
+                    const Editname = queryByTestId('formEditName');
+                    expect(Editname).toBeFalsy();
+                })
+
+            })
+
+      })
+
+
+      it('Test Close button', async () => {
+        const { getByText, queryByTestId, getByTestId  } = renderComponent();
+
+        fireEvent.click(getByText('Edit'));
+    
+        await waitFor(async () => {
+          fireEvent.click(getByTestId('btnClose3'));
+          await waitFor (() => {
+            const PostList = queryByTestId('formEditName');
+            expect(PostList).toBeFalsy();
+          })
+        });
 
     })
-})
+
+    })

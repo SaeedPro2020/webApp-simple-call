@@ -51,7 +51,7 @@ export default function ShowPosts(props: propsParm): JSX.Element {
         </ul>
 
         {btnComment && listOfComments[0]?.post_id === postId ?
-                <div data-testid="rootDetailsCountainer" className="detailsContainer">
+                <div data-testid="rootDetailsCountainer">
                     <CloseBtn data-testid="btnClose" onClick={() => setBtnComment(false)}>
                         <img src={closeBtn}></img>
                     </CloseBtn> 

@@ -10,26 +10,15 @@ const mockedCommentAxios = axios as jest.Mocked<typeof axios>;
 
 describe('ShowPosts component', () =>{
 
-  const setBtnPosts: VoidFunction = jest.fn();
   
     const renderComponent  = () => (render(
         <ShowPosts onData={{
             id: 0,
-            user_id: 0,
+            user_id: 12,
             title: "title",
             body: "a body"
         }} />
     ));
-
-    const renderParentComponent  = () => (render(
-      <UserProfile userData={{
-        id: 0,
-        name: "Saeed",
-        email: "saeed@gmail",
-        gender: "male",
-        status: "active"
-      }} image={"something"} />
-  ));
 
     it('IF btn comment click', async () =>{
         const { getByText, queryByTestId } = renderComponent();
@@ -75,7 +64,7 @@ describe('ShowPosts component', () =>{
         mockedCommentAxios.get.mockResolvedValue({
           data: [
             {    
-              id: 0,
+              id: 12,
               post_id: 0,
               name: 'Saeed',
               email: 'test@gmail.com',
@@ -89,8 +78,8 @@ describe('ShowPosts component', () =>{
     await waitFor(async () => {
       fireEvent.click(getByTestId('btnClose'));
       await waitFor(() =>{
-        const userList = queryByTestId('detailsContainer');
-        expect(userList).toBeTruthy();
+        const commentList = queryByTestId('detailsContainer');
+        expect(commentList).toBeFalsy();
       })
       
     });

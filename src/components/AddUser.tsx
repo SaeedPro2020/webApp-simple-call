@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useMutationMutation, Users_Insert_Input, useUsersQuery } from "../api/graphql-frontend";
 import { Container } from "./styles/AddUser.styled";
 
-export default function AddMission(): JSX.Element {
+export default function AddUser(): JSX.Element {
 
     const [name, setName] = useState("")
     const [rocket, setRocket] = useState("")
